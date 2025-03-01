@@ -1,30 +1,43 @@
 export interface Film {
-  id: number;
-  title: string;
-  overview: string;
-  poster_path: string;
-  release_date: string;
-  vote_average: number;
+  id: string;
+  model: string;
+  constructor: string;
+  os: string;
+  releaseDate: number;
+  salerAvatar: string;
+  saler: string;
+  description: string;
+  salerGender: string;
+  salerCity: string;
+  salerCountry: string;
+  phone: string;
+  price: number;
 }
 
 export async function getFilms(): Promise<Array<Film>> {
   try {
     const res: Film[] = [];
 
-    const fichier1 = require('../data/PopularMovies_p1.json');
-    const fichier2 = require('../data/PopularMovies_p2.json');
+    const fichier1 = require('../data/phone.json');
 
-    const response = [...(fichier1.results), ...(fichier2.results)] 
+    const response = [...(fichier1)] 
 
     response.map((value: any) => {
       res.push(
         {
           id: value.id,
-          title: value.title,
-          release_date: value.release_date,
-          vote_average: value.vote_average,
-          overview: value.overview,
-          poster_path: value.poster_path,
+          model: value.model,
+          constructor: value.constructor,
+          os: value.os,
+          releaseDate: value.releaseDate,
+          salerAvatar: value.salerAvatar,
+          saler: value.saler,
+          description: value.description,
+          salerGender: value.salerGender,
+          salerCity: value.salerCity,
+          salerCountry: value.salerCountry,
+          phone: value.phone,
+          price: value.price,
         }
       )
     });

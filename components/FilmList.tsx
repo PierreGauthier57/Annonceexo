@@ -16,11 +16,21 @@ const Item = ({ film, onPressFilm }: ItemProps) => (
   <TouchableOpacity onPress={() => onPressFilm(film)}>
     <View style={styles.movieContainer}>
       <Image
-        source={{ uri: `https://image.tmdb.org/t/p/w500${film.poster_path}` }}
+        source={{ uri: film.salerAvatar }}
         style={styles.poster}
       />
       <View style={styles.info}>
-        <Text style={styles.title}>{film.title}</Text>
+        <Text style={styles.title}>{film.model}</Text>
+        <Text>{film.constructor}</Text>
+        <Text>{film.os}</Text>
+        <Text>{film.releaseDate}</Text>
+        <Text>{film.saler}</Text>
+        <Text>{film.description}</Text>
+        <Text>{film.salerGender}</Text>
+        <Text>{film.salerCity}</Text>
+        <Text>{film.salerCountry}</Text>
+        <Text>{film.phone}</Text>
+        <Text>{film.price}</Text>
       </View>
     </View>
   </TouchableOpacity>
