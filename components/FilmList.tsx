@@ -1,5 +1,5 @@
-import React from 'react';
-import { View, Text, Image, FlatList, StyleSheet, TouchableOpacity } from 'react-native';
+import React, { useState } from 'react';
+import { View, Text, Image, FlatList, StyleSheet, TouchableOpacity, TextInput } from 'react-native';
 import { Film } from '../models/Film';
 
 interface MovieListProps {
@@ -37,19 +37,48 @@ const Item = ({ film, onPressFilm }: ItemProps) => (
 );
 
 function MovieList({ films, onPressFilm }: MovieListProps) {
+  const [search, setSearch] = useState('');
+  const [filteredFilms, setFilteredFilms] = useState(films);
+
+  const handleSearch = (text: string) => {
+    setSearch(text);
+    const filtered = films.filter(film => film.model.toLowerCase().includes(text.toLowerCase()));
+    setFilteredFilms(filtered);
+  };
+
   return (
-    <FlatList
-      data={films}
-      keyExtractor={(item) => item.id.toString()}
-      renderItem={({ item }) => (
-        <Item film={item} onPressFilm={onPressFilm} />
-      )}
-      contentContainerStyle={styles.listContent}
-    />
+    <View style={styles.container}>
+      <TextInput
+        style={styles.searchBar}
+        placeholder="Rechercher par titre..."
+        value={search}
+        onChangeText={handleSearch}
+      />
+      <FlatList
+        data={filteredFilms}
+        keyExtractor={(item) => item.id.toString()}
+        renderItem={({ item }) => (
+          <Item film={item} onPressFilm={onPressFilm} />
+        )}
+        contentContainerStyle={styles.listContent}
+      />
+    </View>
   );
 }
 
 const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    padding: 10,
+  },
+  searchBar: {
+    height: 40,
+    borderColor: '#ccc',
+    borderWidth: 1,
+    borderRadius: 5,
+    paddingHorizontal: 10,
+    marginBottom: 10,
+  },
   movieContainer: {
     flexDirection: 'row',
     marginBottom: 20,
