@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, Text, Image, StyleSheet, ScrollView, TouchableOpacity } from 'react-native';
+import { View, Text, Image, StyleSheet, ScrollView, TouchableOpacity, Dimensions } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
 import { addFav, removeFav } from '../globalState/favoritesSlice';
 import { RootState } from '../store';
@@ -8,24 +8,34 @@ import { Film } from '../models/Film';
 import * as Animatable from 'react-native-animatable';
 import Icon from 'react-native-vector-icons/FontAwesome';
 
-type MovieDetailsProps = NativeStackScreenProps<{
-  film: Film;
-}>;
+type RootStackParamList = {
+  "Liste des annonces": undefined;
+  "Annonce": { film: Film };
+  "Mes favoris": undefined;
+};
 
-function MovieDetails(props: MovieDetailsProps) {
-  const { film } = props.route.params;
+type MovieDetailsProps = NativeStackScreenProps<RootStackParamList, 'Annonce'>;
+
+function MovieDetails({ route }: MovieDetailsProps) {
+  const { film } = route.params;
   const dispatch = useDispatch();
   const isFavorite = useSelector((state: RootState) =>
     !!state.favoris.favorites.find((fav) => fav.id === film.id)
   );
 
   const [liked, setLiked] = useState<boolean>(isFavorite);
+  const [hearts, setHearts] = useState<number[]>([]);
 
   const handleLike = () => {
     if (liked) {
       dispatch(removeFav(film.id));
     } else {
       dispatch(addFav(film));
+      // Ajouter des cœurs animés
+      setHearts([...hearts, hearts.length]);
+      setTimeout(() => {
+        setHearts((hearts) => hearts.slice(1));
+      }, 1000);
     }
     setLiked(!liked);
   };
@@ -54,7 +64,7 @@ function MovieDetails(props: MovieDetailsProps) {
         </View>
         <Text style={styles.description}>{film.description}</Text>
 
-        <TouchableOpacity onPress={handleLike}>
+        <TouchableOpacity onPress={handleLike} style={styles.likeButtonContainer}>
           <Animatable.View animation={liked ? 'bounceIn' : undefined}>
             <Icon
               name={liked ? 'heart' : 'heart-o'}
@@ -64,6 +74,17 @@ function MovieDetails(props: MovieDetailsProps) {
             />
           </Animatable.View>
         </TouchableOpacity>
+
+        {hearts.map((_, index) => (
+          <Animatable.View
+            key={index}
+            animation="fadeOutUp"
+            duration={1000}
+            style={[styles.heartContainer, { left: Math.random() * Dimensions.get('window').width }]}
+          >
+            <Icon name="heart" size={30} color="red" />
+          </Animatable.View>
+        ))}
       </View>
     </ScrollView>
   );
@@ -150,8 +171,15 @@ const styles = StyleSheet.create({
     color: '#555',
     marginBottom: 10,
   },
+  likeButtonContainer: {
+    position: 'relative',
+  },
   likeButton: {
     marginTop: 10,
+  },
+  heartContainer: {
+    position: 'absolute',
+    bottom: 50,
   },
 });
 
