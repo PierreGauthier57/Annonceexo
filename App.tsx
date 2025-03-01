@@ -21,7 +21,10 @@ export default function App() {
   return (
     <Provider store={store}>
       <NavigationContainer>
-        <Stack.Navigator initialRouteName="Liste des annonces">
+        <Stack.Navigator initialRouteName="Liste des annonces"
+         screenOptions={{
+          headerTitleAlign: 'center',
+        }}>
           <Stack.Screen name="Liste des annonces" component={HomeScreen} />
           <Stack.Screen name="Annonce" component={MovieDetails} />
           <Stack.Screen name="Mes favoris" component={FavScreen} />

@@ -1,24 +1,34 @@
-import React from 'react';
-import { View, Text, Image, StyleSheet, ScrollView } from 'react-native';
+import React, { useState } from 'react';
+import { View, Text, Image, StyleSheet, ScrollView, TouchableOpacity } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
 import { addFav, removeFav } from '../globalState/favoritesSlice';
 import { RootState } from '../store';
-import type { StaticScreenProps } from '@react-navigation/native';
+import type { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { Film } from '../models/Film';
-import BetterButton from '../components/utils/BetterButton';
+import * as Animatable from 'react-native-animatable';
+import Icon from 'react-native-vector-icons/FontAwesome';
 
-type MovieDetailsProps = StaticScreenProps<{
+type MovieDetailsProps = NativeStackScreenProps<{
   film: Film;
 }>;
 
 function MovieDetails(props: MovieDetailsProps) {
   const { film } = props.route.params;
-
   const dispatch = useDispatch();
-  
   const isFavorite = useSelector((state: RootState) =>
     state.favoris.favorites.find((fav) => fav.id === film.id)
   );
+
+  const [liked, setLiked] = useState(isFavorite);
+
+  const handleLike = () => {
+    if (liked) {
+      dispatch(removeFav(film.id));
+    } else {
+      dispatch(addFav(film));
+    }
+    setLiked(!liked);
+  };
 
   return (
     <ScrollView contentContainerStyle={styles.scrollContainer}>
@@ -44,19 +54,16 @@ function MovieDetails(props: MovieDetailsProps) {
         </View>
         <Text style={styles.description}>{film.description}</Text>
 
-        {isFavorite ? (
-          <BetterButton 
-            text="dislike !" 
-            onPress={() => dispatch(removeFav(film.id))}
-            buttonStyle={styles.removeButton}
-          />
-        ) : (
-          <BetterButton 
-            text="like !" 
-            onPress={() => dispatch(addFav(film))} 
-            buttonStyle={styles.addButton}
-          />
-        )}
+        <TouchableOpacity onPress={handleLike}>
+          <Animatable.View animation={liked ? 'bounceIn' : undefined}>
+            <Icon
+              name={liked ? 'heart' : 'heart-o'}
+              size={30}
+              color={liked ? 'red' : 'gray'}
+              style={styles.likeButton}
+            />
+          </Animatable.View>
+        </TouchableOpacity>
       </View>
     </ScrollView>
   );
@@ -143,16 +150,7 @@ const styles = StyleSheet.create({
     color: '#555',
     marginBottom: 10,
   },
-  addButton: {
-    backgroundColor: "lightgreen",
-    padding: 10,
-    borderRadius: 5,
-    marginTop: 10,
-  },
-  removeButton: {
-    backgroundColor: "lightcoral",
-    padding: 10,
-    borderRadius: 5,
+  likeButton: {
     marginTop: 10,
   },
 });
