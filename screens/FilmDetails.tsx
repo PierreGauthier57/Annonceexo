@@ -23,13 +23,20 @@ function MovieDetails(props: MovieDetailsProps) {
   return (
     <View style={styles.container}>
       <Image
-        source={{ uri: `https://image.tmdb.org/t/p/w500${film.poster_path}` }}
+        source={{ uri: film.salerAvatar }}
         style={styles.poster}
       />
-      <Text style={styles.title}>{film.title}</Text>
-      <Text style={styles.releaseDate}>Date de sortie: {film.release_date}</Text>
-      <Text style={styles.vote}>Note: {film.vote_average}/10</Text>
-      <Text style={styles.overview}>{film.overview}</Text>
+      <Text style={styles.title}>{film.model}</Text>
+      <Text style={styles.releaseDate}>Date de sortie: {film.releaseDate}</Text>
+      <Text style={styles.constructor}>Constructeur: {film.constructor}</Text>
+      <Text style={styles.os}>OS: {film.os}</Text>
+      <Text style={styles.saler}>Vendeur: {film.saler}</Text>
+      <Text style={styles.description}>{film.description}</Text>
+      <Text style={styles.salerGender}>Genre du vendeur: {film.salerGender}</Text>
+      <Text style={styles.salerCity}>Ville du vendeur: {film.salerCity}</Text>
+      <Text style={styles.salerCountry}>Pays du vendeur: {film.salerCountry}</Text>
+      <Text style={styles.phone}>Téléphone: {film.phone}</Text>
+      <Text style={styles.price}>Prix: {film.price} €</Text>
       {isFavorite ? (
         <BetterButton 
           text="dislike !" 
@@ -62,21 +69,57 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 24,
     fontWeight: 'bold',
-    marginBottom: 50,
+    marginBottom: 10,
   },
   releaseDate: {
     fontSize: 16,
     color: '#555',
     marginBottom: 5,
   },
-  vote: {
+  constructor: {
     fontSize: 16,
+    color: '#555',
+    marginBottom: 5,
+  },
+  os: {
+    fontSize: 16,
+    color: '#555',
+    marginBottom: 5,
+  },
+  saler: {
+    fontSize: 16,
+    color: '#555',
+    marginBottom: 5,
+  },
+  description: {
+    fontSize: 14,
     color: '#555',
     marginBottom: 10,
   },
-  overview: {
+  salerGender: {
     fontSize: 14,
     color: '#555',
+    marginBottom: 5,
+  },
+  salerCity: {
+    fontSize: 14,
+    color: '#555',
+    marginBottom: 5,
+  },
+  salerCountry: {
+    fontSize: 14,
+    color: '#555',
+    marginBottom: 5,
+  },
+  phone: {
+    fontSize: 14,
+    color: '#555',
+    marginBottom: 5,
+  },
+  price: {
+    fontSize: 16,
+    color: '#555',
+    marginBottom: 10,
   },
   addButton: {
     backgroundColor: "lightgreen",
