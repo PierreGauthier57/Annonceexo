@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { View, Text, Image, FlatList, StyleSheet, TouchableOpacity, TextInput } from 'react-native';
 import { Film } from '../models/Film';
-import { Ionicons } from '@expo/vector-icons'; // Assurez-vous d'avoir installé @expo/vector-icons
+import { Ionicons } from '@expo/vector-icons'; 
 
 interface MovieListProps {
   films: Film[];
@@ -27,16 +27,39 @@ const Item = ({ film, onPressFilm }: ItemProps) => (
 
 function MovieList({ films, onPressFilm }: MovieListProps) {
   const [search, setSearch] = useState('');
+  const [minPrice, setMinPrice] = useState('');
+  const [maxPrice, setMaxPrice] = useState('');
   const [filteredFilms, setFilteredFilms] = useState(films);
 
   const handleSearch = (text: string) => {
     setSearch(text);
-    const filtered = films.filter(film => film.model.toLowerCase().includes(text.toLowerCase()));
+    filterFilms(text, minPrice, maxPrice);
+  };
+
+  const handleMinPriceChange = (text: string) => {
+    setMinPrice(text);
+    filterFilms(search, text, maxPrice);
+  };
+
+  const handleMaxPriceChange = (text: string) => {
+    setMaxPrice(text);
+    filterFilms(search, minPrice, text);
+  };
+
+  const filterFilms = (searchText: string, minPrice: string, maxPrice: string) => {
+    const filtered = films.filter(film => {
+      const matchesSearch = film.model.toLowerCase().includes(searchText.toLowerCase());
+      const matchesMinPrice = minPrice === '' || film.price >= parseFloat(minPrice);
+      const matchesMaxPrice = maxPrice === '' || film.price <= parseFloat(maxPrice);
+      return matchesSearch && matchesMinPrice && matchesMaxPrice;
+    });
     setFilteredFilms(filtered);
   };
 
   const clearSearch = () => {
     setSearch('');
+    setMinPrice('');
+    setMaxPrice('');
     setFilteredFilms(films);
   };
 
@@ -54,6 +77,22 @@ function MovieList({ films, onPressFilm }: MovieListProps) {
             <Ionicons name="close-circle" size={24} color="gray" />
           </TouchableOpacity>
         )}
+      </View>
+      <View style={styles.priceContainer}>
+        <TextInput
+          style={styles.priceInput}
+          placeholder="Prix min"
+          value={minPrice}
+          onChangeText={handleMinPriceChange}
+          keyboardType="numeric"
+        />
+        <TextInput
+          style={styles.priceInput}
+          placeholder="Prix max"
+          value={maxPrice}
+          onChangeText={handleMaxPriceChange}
+          keyboardType="numeric"
+        />
       </View>
       <Text style={styles.announcementCount}>
         {filteredFilms.length} annonces disponibles
@@ -90,6 +129,20 @@ const styles = StyleSheet.create({
   },
   clearButton: {
     marginLeft: 10,
+  },
+  priceContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    marginBottom: 10,
+  },
+  priceInput: {
+    flex: 1,
+    height: 40,
+    borderColor: '#ccc',
+    borderWidth: 1,
+    borderRadius: 5,
+    paddingHorizontal: 10,
+    marginHorizontal: 5,
   },
   announcementCount: {
     fontSize: 16,
