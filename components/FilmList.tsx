@@ -30,6 +30,7 @@ function MovieList({ films, onPressFilm }: MovieListProps) {
   const [minPrice, setMinPrice] = useState('');
   const [maxPrice, setMaxPrice] = useState('');
   const [filteredFilms, setFilteredFilms] = useState(films);
+  const [sortOrder, setSortOrder] = useState<'asc' | 'desc'>('asc');
 
   const handleSearch = (text: string) => {
     setSearch(text);
@@ -64,8 +65,9 @@ function MovieList({ films, onPressFilm }: MovieListProps) {
   };
 
   const sortFilmsByPrice = () => {
-    const sorted = [...filteredFilms].sort((a, b) => a.price - b.price);
+    const sorted = [...filteredFilms].sort((a, b) => sortOrder === 'asc' ? a.price - b.price : b.price - a.price);
     setFilteredFilms(sorted);
+    setSortOrder(sortOrder === 'asc' ? 'desc' : 'asc');
   };
 
   return (
@@ -100,7 +102,9 @@ function MovieList({ films, onPressFilm }: MovieListProps) {
         />
       </View>
       <TouchableOpacity onPress={sortFilmsByPrice} style={styles.sortButton}>
-        <Text style={styles.sortButtonText}>Trier par prix croissant</Text>
+        <Text style={styles.sortButtonText}>
+          Trier par prix {sortOrder === 'asc' ? 'croissant' : 'décroissant'}
+        </Text>
       </TouchableOpacity>
       <Text style={styles.announcementCount}>
         {filteredFilms.length} annonces disponibles
