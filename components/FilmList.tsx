@@ -3,7 +3,7 @@ import { View, Text, Image, FlatList, StyleSheet, TouchableOpacity, TextInput } 
 import { Film } from '../models/Film';
 import { Ionicons } from '@expo/vector-icons'; 
 
-interface MovieListProps {
+interface AnnonceListProps {
   films: Film[];
   onPressFilm: (film: Film) => void;
 }
@@ -25,7 +25,7 @@ const Item = ({ film, onPressFilm }: ItemProps) => (
   </TouchableOpacity>
 );
 
-function MovieList({ films, onPressFilm }: MovieListProps) {
+function AnnonceList({ films, onPressFilm }: AnnonceListProps) {
   const [search, setSearch] = useState('');
   const [minPrice, setMinPrice] = useState('');
   const [maxPrice, setMaxPrice] = useState('');
@@ -208,4 +208,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default MovieList;
+export default AnnonceList;

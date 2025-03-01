@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useCallback } from 'react';
 import { View, StyleSheet, Text, ActivityIndicator } from 'react-native';
-import MovieList from '../components/FilmList';
+import AnnonceList from '../components/FilmList';
 import { getFilms, Film } from '../models/Film';
 import { useNavigation } from '@react-navigation/native';
 import { StackNavigationProp } from '@react-navigation/stack';
@@ -74,7 +74,7 @@ function HomeScreen() {
         buttonStyle={styles.button}
       />
       <View style={styles.listContainer}>
-        <MovieList films={films} onPressFilm={handlePressFilm} />
+        <AnnonceList films={films} onPressFilm={handlePressFilm} />
       </View>
     </View>
   );

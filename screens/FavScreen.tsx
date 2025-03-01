@@ -6,7 +6,7 @@ import { StackNavigationProp } from '@react-navigation/stack';
 import { RootStackParamList } from '../App';
 import { useNavigation } from '@react-navigation/native';
 import { Film } from '../models/Film';
-import MovieList from '../components/FilmList';
+import AnnonceList from '../components/FilmList';
 
 type FavoritesScreenNavigationProp = StackNavigationProp<RootStackParamList, 'Mes favoris'>;
 
@@ -18,7 +18,7 @@ function FavScreen() {
 
   return (
     <View style={styles.container}>
-      <MovieList
+      <AnnonceList
         films={favorites}
         onPressFilm={(film: Film) => navigation.navigate('Annonce', { film: film })}
       />
