@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { View, Text, Image, FlatList, StyleSheet, TouchableOpacity, TextInput } from 'react-native';
 import { Film } from '../models/Film';
+import { Ionicons } from '@expo/vector-icons'; // Assurez-vous d'avoir installé @expo/vector-icons
 
 interface MovieListProps {
   films: Film[];
@@ -34,14 +35,26 @@ function MovieList({ films, onPressFilm }: MovieListProps) {
     setFilteredFilms(filtered);
   };
 
+  const clearSearch = () => {
+    setSearch('');
+    setFilteredFilms(films);
+  };
+
   return (
     <View style={styles.container}>
-      <TextInput
-        style={styles.searchBar}
-        placeholder="Rechercher par titre..."
-        value={search}
-        onChangeText={handleSearch}
-      />
+      <View style={styles.searchContainer}>
+        <TextInput
+          style={styles.searchBar}
+          placeholder="Rechercher par titre..."
+          value={search}
+          onChangeText={handleSearch}
+        />
+        {search.length > 0 && (
+          <TouchableOpacity onPress={clearSearch} style={styles.clearButton}>
+            <Ionicons name="close-circle" size={24} color="gray" />
+          </TouchableOpacity>
+        )}
+      </View>
       <Text style={styles.announcementCount}>
         {filteredFilms.length} annonces disponibles
       </Text>
@@ -62,13 +75,21 @@ const styles = StyleSheet.create({
     flex: 1,
     padding: 10,
   },
+  searchContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginBottom: 10,
+  },
   searchBar: {
+    flex: 1,
     height: 40,
     borderColor: '#ccc',
     borderWidth: 1,
     borderRadius: 5,
     paddingHorizontal: 10,
-    marginBottom: 10,
+  },
+  clearButton: {
+    marginLeft: 10,
   },
   announcementCount: {
     fontSize: 16,

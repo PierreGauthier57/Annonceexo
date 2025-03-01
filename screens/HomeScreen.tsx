@@ -40,7 +40,7 @@ function HomeScreen() {
 
   const handlePressFilm = useCallback(
     (film: Film) => {
-      navigation.navigate('Details', { film });
+      navigation.navigate('Annonce', { film });
     },
     [navigation]
   );
