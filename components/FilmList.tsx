@@ -63,6 +63,11 @@ function MovieList({ films, onPressFilm }: MovieListProps) {
     setFilteredFilms(films);
   };
 
+  const sortFilmsByPrice = () => {
+    const sorted = [...filteredFilms].sort((a, b) => a.price - b.price);
+    setFilteredFilms(sorted);
+  };
+
   return (
     <View style={styles.container}>
       <View style={styles.searchContainer}>
@@ -94,6 +99,9 @@ function MovieList({ films, onPressFilm }: MovieListProps) {
           keyboardType="numeric"
         />
       </View>
+      <TouchableOpacity onPress={sortFilmsByPrice} style={styles.sortButton}>
+        <Text style={styles.sortButtonText}>Trier par prix croissant</Text>
+      </TouchableOpacity>
       <Text style={styles.announcementCount}>
         {filteredFilms.length} annonces disponibles
       </Text>
@@ -143,6 +151,17 @@ const styles = StyleSheet.create({
     borderRadius: 5,
     paddingHorizontal: 10,
     marginHorizontal: 5,
+  },
+  sortButton: {
+    backgroundColor: '#007BFF',
+    padding: 10,
+    borderRadius: 5,
+    alignItems: 'center',
+    marginBottom: 10,
+  },
+  sortButtonText: {
+    color: '#fff',
+    fontSize: 16,
   },
   announcementCount: {
     fontSize: 16,
