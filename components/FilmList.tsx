@@ -31,6 +31,7 @@ function MovieList({ films, onPressFilm }: MovieListProps) {
   const [maxPrice, setMaxPrice] = useState('');
   const [filteredFilms, setFilteredFilms] = useState(films);
   const [sortOrder, setSortOrder] = useState<'asc' | 'desc'>('asc');
+  const [showFilters, setShowFilters] = useState(false);
 
   const handleSearch = (text: string) => {
     setSearch(text);
@@ -72,40 +73,47 @@ function MovieList({ films, onPressFilm }: MovieListProps) {
 
   return (
     <View style={styles.container}>
-      <View style={styles.searchContainer}>
-        <TextInput
-          style={styles.searchBar}
-          placeholder="Rechercher par titre..."
-          value={search}
-          onChangeText={handleSearch}
-        />
-        {search.length > 0 && (
-          <TouchableOpacity onPress={clearSearch} style={styles.clearButton}>
-            <Ionicons name="close-circle" size={24} color="gray" />
-          </TouchableOpacity>
-        )}
-      </View>
-      <View style={styles.priceContainer}>
-        <TextInput
-          style={styles.priceInput}
-          placeholder="Prix min"
-          value={minPrice}
-          onChangeText={handleMinPriceChange}
-          keyboardType="numeric"
-        />
-        <TextInput
-          style={styles.priceInput}
-          placeholder="Prix max"
-          value={maxPrice}
-          onChangeText={handleMaxPriceChange}
-          keyboardType="numeric"
-        />
-      </View>
-      <TouchableOpacity onPress={sortFilmsByPrice} style={styles.sortButton}>
-        <Text style={styles.sortButtonText}>
-          Trier par prix {sortOrder === 'asc' ? 'croissant' : 'décroissant'}
-        </Text>
+      <TouchableOpacity onPress={() => setShowFilters(!showFilters)} style={styles.toggleButton}>
+        <Ionicons name={showFilters ? "chevron-up" : "chevron-down"} size={24} color="gray" />
       </TouchableOpacity>
+      {showFilters && (
+        <View>
+          <View style={styles.searchContainer}>
+            <TextInput
+              style={styles.searchBar}
+              placeholder="Rechercher par titre..."
+              value={search}
+              onChangeText={handleSearch}
+            />
+            {search.length > 0 && (
+              <TouchableOpacity onPress={clearSearch} style={styles.clearButton}>
+                <Ionicons name="close-circle" size={24} color="gray" />
+              </TouchableOpacity>
+            )}
+          </View>
+          <View style={styles.priceContainer}>
+            <TextInput
+              style={styles.priceInput}
+              placeholder="Prix min"
+              value={minPrice}
+              onChangeText={handleMinPriceChange}
+              keyboardType="numeric"
+            />
+            <TextInput
+              style={styles.priceInput}
+              placeholder="Prix max"
+              value={maxPrice}
+              onChangeText={handleMaxPriceChange}
+              keyboardType="numeric"
+            />
+          </View>
+          <TouchableOpacity onPress={sortFilmsByPrice} style={styles.sortButton}>
+            <Text style={styles.sortButtonText}>
+              Trier par prix {sortOrder === 'asc' ? 'croissant' : 'décroissant'}
+            </Text>
+          </TouchableOpacity>
+        </View>
+      )}
       <Text style={styles.announcementCount}>
         {filteredFilms.length} annonces disponibles
       </Text>
@@ -125,6 +133,10 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     padding: 10,
+  },
+  toggleButton: {
+    alignItems: 'center',
+    marginBottom: 10,
   },
   searchContainer: {
     flexDirection: 'row',
