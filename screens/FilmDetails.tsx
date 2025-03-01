@@ -21,24 +21,29 @@ function MovieDetails(props: MovieDetailsProps) {
   );
 
   return (
-    
+    <ScrollView contentContainerStyle={styles.scrollContainer}>
       <View style={styles.container}>
-        <Image
-          source={{ uri: film.salerAvatar }}
-          style={styles.poster}
-        />
-      <ScrollView contentContainerStyle={styles.scrollContainer}>
         <Text style={styles.title}>{film.model}</Text>
-        <Text style={styles.releaseDate}>Date de sortie: {film.releaseDate}</Text>
-        <Text style={styles.constructor}>Constructeur: {film.constructor}</Text>
-        <Text style={styles.os}>OS: {film.os}</Text>
-        <Text style={styles.saler}>Vendeur: {film.saler}</Text>
-        <Text style={styles.description}>{film.description}</Text>
-        <Text style={styles.salerGender}>Genre du vendeur: {film.salerGender}</Text>
-        <Text style={styles.salerCity}>Ville du vendeur: {film.salerCity}</Text>
-        <Text style={styles.salerCountry}>Pays du vendeur: {film.salerCountry}</Text>
-        <Text style={styles.phone}>Téléphone: {film.phone}</Text>
+        <Text style={styles.title}>INFORMATION: </Text>
         <Text style={styles.price}>Prix: {film.price} €</Text>
+        <Text style={styles.os}>OS: {film.os}</Text>
+        <Text style={styles.constructor}>Marque: {film.constructor}</Text>
+        <Text style={styles.releaseDate}>Année sortie: {film.releaseDate}</Text>
+        <Text style={styles.title}>Vendeur: </Text>
+        <View style={styles.sellerContainer}>
+          <Image
+            source={{ uri: film.salerAvatar }}
+            style={styles.poster}
+          />
+          <View style={styles.vendeurInfo}>
+            <Text style={styles.salerGender}>Genre: {film.salerGender}</Text>
+            <Text style={styles.salerCity}>Ville: {film.salerCity}</Text>
+            <Text style={styles.salerCountry}>Pays: {film.salerCountry}</Text>
+            <Text style={styles.phone}>Téléphone: {film.phone}</Text>
+          </View>
+        </View>
+        <Text style={styles.description}>{film.description}</Text>
+
         {isFavorite ? (
           <BetterButton 
             text="dislike !" 
@@ -52,9 +57,8 @@ function MovieDetails(props: MovieDetailsProps) {
             buttonStyle={styles.addButton}
           />
         )}
-        </ScrollView>
       </View>
-    
+    </ScrollView>
   );
 };
 
@@ -71,10 +75,10 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   poster: {
-    width: '100%',
-    height: 300,
-    borderRadius: 8,
-    marginBottom: 20,
+    width: 100,
+    height: 100,
+    borderRadius: 50,
+    marginRight: 10,
   },
   title: {
     fontSize: 24,
@@ -105,6 +109,14 @@ const styles = StyleSheet.create({
     fontSize: 14,
     color: '#555',
     marginBottom: 10,
+  },
+  sellerContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginBottom: 20,
+  },
+  vendeurInfo: {
+    flex: 1,
   },
   salerGender: {
     fontSize: 14,

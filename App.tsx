@@ -10,9 +10,9 @@ import { Film } from './models/Film';
 
 
 export type RootStackParamList = {
-  Home: undefined;
-  Details: { film: Movie };
-  Favoris: undefined;
+  "Liste des annonces": undefined;
+  "Details": { movie: Film };
+  "Mes favoris": undefined;
 };
 
 const Stack = createStackNavigator<RootStackParamList>();
@@ -21,10 +21,10 @@ export default function App() {
   return (
     <Provider store={store}>
       <NavigationContainer>
-        <Stack.Navigator initialRouteName="Home">
-          <Stack.Screen name="Home" component={HomeScreen} />
+        <Stack.Navigator initialRouteName="Liste des annonces">
+          <Stack.Screen name="Liste des annonces" component={HomeScreen} />
           <Stack.Screen name="Details" component={MovieDetails} />
-          <Stack.Screen name="Favoris" component={FavScreen} />
+          <Stack.Screen name="Mes favoris" component={FavScreen} />
         </Stack.Navigator>
       </NavigationContainer>
     </Provider>

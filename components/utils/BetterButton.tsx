@@ -38,7 +38,7 @@ const styles = StyleSheet.create({
     height: 50,
     paddingHorizontal: 20,
     paddingVertical: 12,
-    borderRadius: 8,
+    borderRadius: 50,
     shadowColor: "#000",
     shadowOffset: { width: 0, height: 4 },
     shadowOpacity: 0.3,
@@ -48,6 +48,6 @@ const styles = StyleSheet.create({
   },
   buttonText: {
     textAlign:"center",
-    color:"black"
+    color:"white"
   }
 });

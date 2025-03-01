@@ -18,7 +18,6 @@ function FavScreen() {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.header}>Film favoris</Text>
       <MovieList
         films={favorites}
         onPressFilm={(film: Film) => navigation.navigate('Details', { film: film })}

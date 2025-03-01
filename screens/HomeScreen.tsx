@@ -9,7 +9,7 @@ import { useSelector } from 'react-redux';
 import { RootState } from '../store';
 import BetterButton from '../components/utils/BetterButton';
 
-type HomeScreenNavigationProp = StackNavigationProp<RootStackParamList, 'Home'>;
+type HomeScreenNavigationProp = StackNavigationProp<RootStackParamList, 'Liste des annonces'>;
 
 function HomeScreen() {
   const [films, setFilms] = useState<Film[]>([]);
@@ -19,7 +19,6 @@ function HomeScreen() {
   const navigation = useNavigation<HomeScreenNavigationProp>();
   const nbFav = useSelector((state: RootState) => state.favoris.favorites.length);
 
-  // Fonction pour récupérer les films
   const fetchFilms = useCallback(async () => {
     try {
       const data = await getFilms();
@@ -33,14 +32,13 @@ function HomeScreen() {
     }
   }, []);
 
-  // Effet pour charger les films au montage du composant
   useEffect(() => {
     fetchFilms();
   }, [fetchFilms]);
 
   const handlePressFilm = useCallback(
     (film: Film) => {
-      navigation.navigate('Details', { film });
+      navigation.navigate('Details', { movie: film });
     },
     [navigation]
   );
@@ -68,10 +66,9 @@ function HomeScreen() {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.header}>Les films</Text>
       <BetterButton
-        text={`Mes favoris (${nbFav})`}
-        onPress={() => navigation.navigate('Favoris')}
+        text={`Mes favoris : ${nbFav}`}
+        onPress={() => navigation.navigate('Mes favoris')}
         buttonStyle={styles.button}
       />
       <View style={styles.listContainer}>
@@ -96,9 +93,9 @@ const styles = StyleSheet.create({
     textAlign: 'center',
   },
   button: {
-    backgroundColor: 'lightgreen',
+    backgroundColor: 'red',
     padding: 10,
-    borderRadius: 5,
+    borderRadius: 52,
     alignItems: 'center',
     marginBottom: 10,
   },
@@ -109,7 +106,7 @@ const styles = StyleSheet.create({
   },
   errorText: {
     fontSize: 18,
-    color: 'red',
+    color: 'lightred',
     marginBottom: 20,
     textAlign: 'center',
   },
