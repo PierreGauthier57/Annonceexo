@@ -9,7 +9,7 @@ import { useSelector } from 'react-redux';
 import { RootState } from '../store';
 import BetterButton from '../components/utils/BetterButton';
 
-type HomeScreenNavigationProp = StackNavigationProp<RootStackParamList, 'Home'>;
+type HomeScreenNavigationProp = StackNavigationProp<RootStackParamList, 'Liste des annonces'>;
 
 function HomeScreen() {
   const [films, setFilms] = useState<Film[]>([]);
@@ -68,10 +68,9 @@ function HomeScreen() {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.header}>Les films</Text>
       <BetterButton
         text={`Mes favoris (${nbFav})`}
-        onPress={() => navigation.navigate('Favoris')}
+        onPress={() => navigation.navigate('Mes favoris')}
         buttonStyle={styles.button}
       />
       <View style={styles.listContainer}>

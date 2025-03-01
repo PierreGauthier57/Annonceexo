@@ -8,7 +8,7 @@ import { useNavigation } from '@react-navigation/native';
 import { Film } from '../models/Film';
 import MovieList from '../components/FilmList';
 
-type FavoritesScreenNavigationProp = StackNavigationProp<RootStackParamList, 'Favoris'>;
+type FavoritesScreenNavigationProp = StackNavigationProp<RootStackParamList, 'Mes favoris'>;
 
 function FavScreen() {
 
@@ -20,7 +20,7 @@ function FavScreen() {
     <View style={styles.container}>
       <MovieList
         films={favorites}
-        onPressFilm={(film: Film) => navigation.navigate('Details', { film: film })}
+        onPressFilm={(film: Film) => navigation.navigate('Annonce', { film: film })}
       />
     </View>
   );
