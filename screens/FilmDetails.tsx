@@ -32,9 +32,9 @@ function MovieDetails({ route }: MovieDetailsProps) {
     } else {
       dispatch(addFav(film));
       // Ajouter des cœurs animés
-      setHearts([...hearts, hearts.length]);
+      setHearts([...hearts, ...Array(5).fill(0).map((_, i) => hearts.length + i)]);
       setTimeout(() => {
-        setHearts((hearts) => hearts.slice(1));
+        setHearts((hearts) => hearts.slice(5));
       }, 1000);
     }
     setLiked(!liked);
@@ -64,27 +64,29 @@ function MovieDetails({ route }: MovieDetailsProps) {
         </View>
         <Text style={styles.description}>{film.description}</Text>
 
-        <TouchableOpacity onPress={handleLike} style={styles.likeButtonContainer}>
-          <Animatable.View animation={liked ? 'bounceIn' : undefined}>
-            <Icon
-              name={liked ? 'heart' : 'heart-o'}
-              size={30}
-              color={liked ? 'red' : 'gray'}
-              style={styles.likeButton}
-            />
-          </Animatable.View>
-        </TouchableOpacity>
+        <View style={styles.likeButtonContainer}>
+          <TouchableOpacity onPress={handleLike}>
+            <Animatable.View animation={liked ? 'bounceIn' : undefined}>
+              <Icon
+                name={liked ? 'heart' : 'heart-o'}
+                size={30}
+                color={liked ? 'red' : 'gray'}
+                style={styles.likeButton}
+              />
+            </Animatable.View>
+          </TouchableOpacity>
 
-        {hearts.map((_, index) => (
-          <Animatable.View
-            key={index}
-            animation="fadeOutUp"
-            duration={1000}
-            style={[styles.heartContainer, { left: Math.random() * Dimensions.get('window').width }]}
-          >
-            <Icon name="heart" size={30} color="red" />
-          </Animatable.View>
-        ))}
+          {hearts.map((_, index) => (
+            <Animatable.View
+              key={index}
+              animation="fadeOutUp"
+              duration={1000}
+              style={[styles.heartContainer, { left: Math.random() * 50 - 25, top: Math.random() * 50 - 25 }]}
+            >
+              <Icon name="heart" size={30} color="red" />
+            </Animatable.View>
+          ))}
+        </View>
       </View>
     </ScrollView>
   );
@@ -173,13 +175,15 @@ const styles = StyleSheet.create({
   },
   likeButtonContainer: {
     position: 'relative',
+    alignItems: 'center',
+    height: 100, 
   },
   likeButton: {
     marginTop: 10,
   },
   heartContainer: {
     position: 'absolute',
-    bottom: 50,
+    bottom: 0,
   },
 });
 
