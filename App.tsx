@@ -4,14 +4,14 @@ import { createStackNavigator } from '@react-navigation/stack';
 import { Provider } from 'react-redux';
 import { store } from './store';
 import HomeScreen from './screens/HomeScreen';
-import MovieDetails from './screens/FilmDetails';
+import AnnonceDetails from './screens/FilmDetails';
 import FavScreen from './screens/FavScreen';
-import { Film } from './models/Film';
+import { Annonce } from './models/Film';
 
 
 export type RootStackParamList = {
   "Liste des annonces": undefined;
-  "Annonce": { film: Film };
+  "Annonce": { annonce: Annonce };
   "Mes favoris": undefined;
 };
 
@@ -26,7 +26,7 @@ export default function App() {
           headerTitleAlign: 'center',
         }}>
           <Stack.Screen name="Liste des annonces" component={HomeScreen} />
-          <Stack.Screen name="Annonce" component={MovieDetails} />
+          <Stack.Screen name="Annonce" component={AnnonceDetails} />
           <Stack.Screen name="Mes favoris" component={FavScreen} />
         </Stack.Navigator>
       </NavigationContainer>

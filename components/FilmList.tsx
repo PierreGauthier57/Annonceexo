@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { View, Text, FlatList, StyleSheet, TouchableOpacity, TextInput } from 'react-native';
-import { Film as Annonce } from '../models/Film';
+import { Annonce as Annonce } from '../models/Film';
 import { Ionicons } from '@expo/vector-icons'; 
 
 interface AnnonceListProps {

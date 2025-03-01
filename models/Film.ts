@@ -1,4 +1,4 @@
-export interface Film {
+export interface Annonce {
   id: string;
   model: string;
   constructor: string;
@@ -14,9 +14,9 @@ export interface Film {
   price: number;
 }
 
-export async function getFilms(): Promise<Array<Film>> {
+export async function getAnnonces(): Promise<Array<Annonce>> {
   try {
-    const res: Film[] = [];
+    const res: Annonce[] = [];
 
     const fichier1 = require('../data/phone.json');
 
@@ -43,7 +43,7 @@ export async function getFilms(): Promise<Array<Film>> {
     });
     return res;
   } catch (error: any) {
-    console.log(`Error with function getFilm ${error.message}`);
+    console.log(`Error with function getAnnonce ${error.message}`);
     throw error;
   }
 };

@@ -1,8 +1,8 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { Film } from '../models/Film';
+import { Annonce as Annonce } from '../models/Film';
 
 interface FavoritesState {
-  favorites: Film[];
+  favorites: Annonce[];
 }
 
 const initialState: FavoritesState = {
@@ -13,7 +13,7 @@ const favoritesSlice = createSlice({
   name: 'favorites',
   initialState,
   reducers: {
-    addFav: (state, action: PayloadAction<Film>) => {
+    addFav: (state, action: PayloadAction<Annonce>) => {
       if (!state.favorites.find((film) => film.id === action.payload.id)) {
         state.favorites.push(action.payload);
       }

@@ -9,10 +9,10 @@ export default [
     languageOptions: { globals: globals.browser },
     rules: {
       "newline-per-chained-call": ["error", { "ignoreChainWithDepth": 2 }],
-      "indent": ["error", 2], // Double espace pour l'indentation
-      "react/jsx-indent": ["error", 2], // Double espace pour l'indentation JSX
-      "react/jsx-indent-props": ["error", 2], // Double espace pour l'indentation des props JSX
-      "react/jsx-newline": ["error", { "prevent": true }], // Saut de ligne pour les éléments JSX
+      "indent": ["error", 2], 
+      "react/jsx-indent": ["error", 2], 
+      "react/jsx-indent-props": ["error", 2], 
+      "react/jsx-newline": ["error", { "prevent": true }], 
     },
   },
   ...tseslint.configs.recommended,

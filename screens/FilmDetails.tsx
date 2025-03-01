@@ -4,23 +4,23 @@ import { useDispatch, useSelector } from 'react-redux';
 import { addFav, removeFav } from '../globalState/favoritesSlice';
 import { RootState } from '../store';
 import type { NativeStackScreenProps } from '@react-navigation/native-stack';
-import { Film } from '../models/Film';
+import { Annonce } from '../models/Film';
 import * as Animatable from 'react-native-animatable';
 import Icon from 'react-native-vector-icons/FontAwesome';
 
 type RootStackParamList = {
   "Liste des annonces": undefined;
-  "Annonce": { film: Film };
+  "Annonce": { annonce: Annonce };
   "Mes favoris": undefined;
 };
 
 type MovieDetailsProps = NativeStackScreenProps<RootStackParamList, 'Annonce'>;
 
-function MovieDetails({ route }: MovieDetailsProps) {
-  const { film } = route.params;
+function AnnonceDetails({ route }: MovieDetailsProps) {
+  const { annonce: annonce } = route.params;
   const dispatch = useDispatch();
   const isFavorite = useSelector((state: RootState) =>
-    !!state.favoris.favorites.find((fav) => fav.id === film.id)
+    !!state.favoris.favorites.find((fav) => fav.id === annonce.id)
   );
 
   const [liked, setLiked] = useState<boolean>(isFavorite);
@@ -28,10 +28,9 @@ function MovieDetails({ route }: MovieDetailsProps) {
 
   const handleLike = () => {
     if (liked) {
-      dispatch(removeFav(film.id));
+      dispatch(removeFav(annonce.id));
     } else {
-      dispatch(addFav(film));
-      // Ajouter des cœurs animés
+      dispatch(addFav(annonce));
       setHearts([...hearts, ...Array(5).fill(0).map((_, i) => hearts.length + i)]);
       setTimeout(() => {
         setHearts((hearts) => hearts.slice(5));
@@ -43,26 +42,26 @@ function MovieDetails({ route }: MovieDetailsProps) {
   return (
     <ScrollView contentContainerStyle={styles.scrollContainer}>
       <View style={styles.container}>
-        <Text style={styles.title}>{film.model}</Text>
+        <Text style={styles.title}>{annonce.model}</Text>
         <Text style={styles.title}>INFORMATION: </Text>
-        <Text style={styles.price}>Prix: {film.price} €</Text>
-        <Text style={styles.os}>OS: {film.os}</Text>
-        <Text style={styles.constructor}>Marque: {film.constructor}</Text>
-        <Text style={styles.releaseDate}>Année sortie: {film.releaseDate}</Text>
+        <Text style={styles.price}>Prix: {annonce.price} €</Text>
+        <Text style={styles.os}>OS: {annonce.os}</Text>
+        <Text style={styles.constructor}>Marque: {annonce.constructor}</Text>
+        <Text style={styles.releaseDate}>Année sortie: {annonce.releaseDate}</Text>
         <Text style={styles.title}>Vendeur: </Text>
         <View style={styles.sellerContainer}>
           <Image
-            source={{ uri: film.salerAvatar }}
+            source={{ uri: annonce.salerAvatar }}
             style={styles.poster}
           />
           <View style={styles.vendeurInfo}>
-            <Text style={styles.salerGender}>Genre: {film.salerGender}</Text>
-            <Text style={styles.salerCity}>Ville: {film.salerCity}</Text>
-            <Text style={styles.salerCountry}>Pays: {film.salerCountry}</Text>
-            <Text style={styles.phone}>Téléphone: {film.phone}</Text>
+            <Text style={styles.salerGender}>Genre: {annonce.salerGender}</Text>
+            <Text style={styles.salerCity}>Ville: {annonce.salerCity}</Text>
+            <Text style={styles.salerCountry}>Pays: {annonce.salerCountry}</Text>
+            <Text style={styles.phone}>Téléphone: {annonce.phone}</Text>
           </View>
         </View>
-        <Text style={styles.description}>{film.description}</Text>
+        <Text style={styles.description}>{annonce.description}</Text>
 
         <View style={styles.likeButtonContainer}>
           <TouchableOpacity onPress={handleLike}>
@@ -187,4 +186,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default MovieDetails;
+export default AnnonceDetails;

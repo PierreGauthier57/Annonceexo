@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useCallback } from 'react';
 import { View, StyleSheet, Text, ActivityIndicator } from 'react-native';
 import AnnonceList from '../components/FilmList';
-import { getFilms, Film } from '../models/Film';
+import { getAnnonces, Annonce } from '../models/Film';
 import { useNavigation } from '@react-navigation/native';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { RootStackParamList } from '../App';
@@ -12,35 +12,33 @@ import BetterButton from '../components/utils/BetterButton';
 type HomeScreenNavigationProp = StackNavigationProp<RootStackParamList, 'Liste des annonces'>;
 
 function HomeScreen() {
-  const [films, setFilms] = useState<Film[]>([]);
+  const [annonces, setAnnonces] = useState<Annonce[]>([]);
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
 
   const navigation = useNavigation<HomeScreenNavigationProp>();
   const nbFav = useSelector((state: RootState) => state.favoris.favorites.length);
 
-  // Fonction pour récupérer les films
-  const fetchFilms = useCallback(async () => {
+  const fetchAnnonces = useCallback(async () => {
     try {
-      const data = await getFilms();
-      setFilms(data);
+      const data = await getAnnonces();
+      setAnnonces(data);
       setError(null);
     } catch (err) {
-      console.error('Error fetching films:', err);
-      setError('Failed to load films. Please try again later.');
+      console.error('Error fetching annonces:', err);
+      setError('Failed to load annonces. Please try again later.');
     } finally {
       setIsLoading(false);
     }
   }, []);
 
-  // Effet pour charger les films au montage du composant
   useEffect(() => {
-    fetchFilms();
-  }, [fetchFilms]);
+    fetchAnnonces();
+  }, [fetchAnnonces]);
 
-  const handlePressFilm = useCallback(
-    (film: Film) => {
-      navigation.navigate('Annonce', { film });
+  const handlePressAnnonce = useCallback(
+    (annonce: Annonce) => {
+      navigation.navigate('Annonce', { annonce: annonce });
     },
     [navigation]
   );
@@ -59,7 +57,7 @@ function HomeScreen() {
         <Text style={styles.errorText}>{error}</Text>
         <BetterButton
           text="Retry"
-          onPress={fetchFilms}
+          onPress={fetchAnnonces}
           buttonStyle={styles.button}
         />
       </View>
@@ -74,13 +72,12 @@ function HomeScreen() {
         buttonStyle={styles.button}
       />
       <View style={styles.listContainer}>
-        <AnnonceList annonces={films} onPressAnnonce={handlePressFilm} />
+        <AnnonceList annonces={annonces} onPressAnnonce={handlePressAnnonce} />
       </View>
     </View>
   );
 }
 
-// Styles
 const styles = StyleSheet.create({
   container: {
     flex: 1,
