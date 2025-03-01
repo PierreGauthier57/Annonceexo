@@ -19,8 +19,8 @@ function FavScreen() {
   return (
     <View style={styles.container}>
       <AnnonceList
-        films={favorites}
-        onPressFilm={(film: Film) => navigation.navigate('Annonce', { film: film })}
+        annonces={favorites}
+        onPressAnnonce={(film: Film) => navigation.navigate('Annonce', { film: film })}
       />
     </View>
   );

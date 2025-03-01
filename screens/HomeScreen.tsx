@@ -74,7 +74,7 @@ function HomeScreen() {
         buttonStyle={styles.button}
       />
       <View style={styles.listContainer}>
-        <AnnonceList films={films} onPressFilm={handlePressFilm} />
+        <AnnonceList annonces={films} onPressAnnonce={handlePressFilm} />
       </View>
     </View>
   );

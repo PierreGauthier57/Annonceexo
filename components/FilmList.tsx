@@ -1,73 +1,73 @@
 import React, { useState } from 'react';
-import { View, Text, Image, FlatList, StyleSheet, TouchableOpacity, TextInput } from 'react-native';
-import { Film } from '../models/Film';
+import { View, Text, FlatList, StyleSheet, TouchableOpacity, TextInput } from 'react-native';
+import { Film as Annonce } from '../models/Film';
 import { Ionicons } from '@expo/vector-icons'; 
 
 interface AnnonceListProps {
-  films: Film[];
-  onPressFilm: (film: Film) => void;
+  annonces: Annonce[];
+  onPressAnnonce: (annonce: Annonce) => void;
 }
 
 type ItemProps = {
-  film: Film;
-  onPressFilm: (film: Film) => void;
+  film: Annonce;
+  onPressAnnonce: (annonce: Annonce) => void;
 };
 
-const Item = ({ film, onPressFilm }: ItemProps) => (
-  <TouchableOpacity onPress={() => onPressFilm(film)}>
-    <View style={styles.movieContainer}>
+const Item = ({ film: annonce, onPressAnnonce: onPressAnnonce }: ItemProps) => (
+  <TouchableOpacity onPress={() => onPressAnnonce(annonce)}>
+    <View style={styles.AnnonceContainer}>
       <View style={styles.info}>
-        <Text style={styles.title}>{film.model}</Text>
-        <Text>{film.releaseDate + " - " + film.price + "€"}</Text>
-        <Text>{film.description}</Text>
+        <Text style={styles.title}>{annonce.model}</Text>
+        <Text>{annonce.releaseDate + " - " + annonce.price + "€"}</Text>
+        <Text>{annonce.description}</Text>
       </View>
     </View>
   </TouchableOpacity>
 );
 
-function AnnonceList({ films, onPressFilm }: AnnonceListProps) {
+function AnnonceList({ annonces: annonces, onPressAnnonce: onPressAnnonce }: AnnonceListProps) {
   const [search, setSearch] = useState('');
   const [minPrice, setMinPrice] = useState('');
   const [maxPrice, setMaxPrice] = useState('');
-  const [filteredFilms, setFilteredFilms] = useState(films);
+  const [filteredAnnonces, setFilteredAnnonces] = useState(annonces);
   const [sortOrder, setSortOrder] = useState<'asc' | 'desc'>('asc');
   const [showFilters, setShowFilters] = useState(false);
 
   const handleSearch = (text: string) => {
     setSearch(text);
-    filterFilms(text, minPrice, maxPrice);
+    filterAnnonces(text, minPrice, maxPrice);
   };
 
   const handleMinPriceChange = (text: string) => {
     setMinPrice(text);
-    filterFilms(search, text, maxPrice);
+    filterAnnonces(search, text, maxPrice);
   };
 
   const handleMaxPriceChange = (text: string) => {
     setMaxPrice(text);
-    filterFilms(search, minPrice, text);
+    filterAnnonces(search, minPrice, text);
   };
 
-  const filterFilms = (searchText: string, minPrice: string, maxPrice: string) => {
-    const filtered = films.filter(film => {
-      const matchesSearch = film.model.toLowerCase().includes(searchText.toLowerCase());
-      const matchesMinPrice = minPrice === '' || film.price >= parseFloat(minPrice);
-      const matchesMaxPrice = maxPrice === '' || film.price <= parseFloat(maxPrice);
+  const filterAnnonces = (searchText: string, minPrice: string, maxPrice: string) => {
+    const filtered = annonces.filter(annonce => {
+      const matchesSearch = annonce.model.toLowerCase().includes(searchText.toLowerCase());
+      const matchesMinPrice = minPrice === '' || annonce.price >= parseFloat(minPrice);
+      const matchesMaxPrice = maxPrice === '' || annonce.price <= parseFloat(maxPrice);
       return matchesSearch && matchesMinPrice && matchesMaxPrice;
     });
-    setFilteredFilms(filtered);
+    setFilteredAnnonces(filtered);
   };
 
   const clearSearch = () => {
     setSearch('');
     setMinPrice('');
     setMaxPrice('');
-    setFilteredFilms(films);
+    setFilteredAnnonces(annonces);
   };
 
-  const sortFilmsByPrice = () => {
-    const sorted = [...filteredFilms].sort((a, b) => sortOrder === 'asc' ? a.price - b.price : b.price - a.price);
-    setFilteredFilms(sorted);
+  const sortAnnoncesByPrice = () => {
+    const sorted = [...filteredAnnonces].sort((a, b) => sortOrder === 'asc' ? a.price - b.price : b.price - a.price);
+    setFilteredAnnonces(sorted);
     setSortOrder(sortOrder === 'asc' ? 'desc' : 'asc');
   };
 
@@ -107,7 +107,7 @@ function AnnonceList({ films, onPressFilm }: AnnonceListProps) {
               keyboardType="numeric"
             />
           </View>
-          <TouchableOpacity onPress={sortFilmsByPrice} style={styles.sortButton}>
+          <TouchableOpacity onPress={sortAnnoncesByPrice} style={styles.sortButton}>
             <Text style={styles.sortButtonText}>
               Trier par prix {sortOrder === 'asc' ? 'croissant' : 'décroissant'}
             </Text>
@@ -115,13 +115,13 @@ function AnnonceList({ films, onPressFilm }: AnnonceListProps) {
         </View>
       )}
       <Text style={styles.announcementCount}>
-        {filteredFilms.length} annonces disponibles
+        {filteredAnnonces.length} annonces disponibles
       </Text>
       <FlatList
-        data={filteredFilms}
+        data={filteredAnnonces}
         keyExtractor={(item) => item.id.toString()}
         renderItem={({ item }) => (
-          <Item film={item} onPressFilm={onPressFilm} />
+          <Item film={item} onPressAnnonce={onPressAnnonce} />
         )}
         contentContainerStyle={styles.listContent}
       />
@@ -183,7 +183,7 @@ const styles = StyleSheet.create({
     fontSize: 16,
     marginBottom: 10,
   },
-  movieContainer: {
+  AnnonceContainer: {
     flexDirection: 'row',
     marginBottom: 20,
     backgroundColor: '#grey',
