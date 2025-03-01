@@ -16,10 +16,10 @@ function MovieDetails(props: MovieDetailsProps) {
   const { film } = props.route.params;
   const dispatch = useDispatch();
   const isFavorite = useSelector((state: RootState) =>
-    state.favoris.favorites.find((fav) => fav.id === film.id)
+    !!state.favoris.favorites.find((fav) => fav.id === film.id)
   );
 
-  const [liked, setLiked] = useState(isFavorite);
+  const [liked, setLiked] = useState<boolean>(isFavorite);
 
   const handleLike = () => {
     if (liked) {
