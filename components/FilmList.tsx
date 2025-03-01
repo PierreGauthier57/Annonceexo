@@ -73,12 +73,7 @@ function MovieList({ films, onPressFilm }: MovieListProps) {
 
   return (
     <View style={styles.container}>
-      <TouchableOpacity onPress={() => setShowFilters(!showFilters)} style={styles.toggleButton}>
-        <Ionicons name={showFilters ? "chevron-up" : "chevron-down"} size={24} color="gray" />
-      </TouchableOpacity>
-      {showFilters && (
-        <View>
-          <View style={styles.searchContainer}>
+      <View style={styles.searchContainer}>
             <TextInput
               style={styles.searchBar}
               placeholder="Rechercher par titre..."
@@ -91,6 +86,11 @@ function MovieList({ films, onPressFilm }: MovieListProps) {
               </TouchableOpacity>
             )}
           </View>
+          <TouchableOpacity onPress={() => setShowFilters(!showFilters)} style={styles.toggleButton}>
+        <Ionicons name={showFilters ? "chevron-up" : "chevron-down"} size={24} color="gray" />
+      </TouchableOpacity>
+      {showFilters && (
+        <View>
           <View style={styles.priceContainer}>
             <TextInput
               style={styles.priceInput}
