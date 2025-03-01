@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "Exercice5Navigation",
-    "slug": "Exercice5Navigation",
+    "name": "annonce-exo",
+    "slug": "annonce-exo",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
