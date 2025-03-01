@@ -47,7 +47,7 @@ function MovieDetails(props: MovieDetailsProps) {
         {isFavorite ? (
           <BetterButton 
             text="dislike !" 
-            onPress={() => dispatch(removeFav(Number(film.id)))}
+            onPress={() => dispatch(removeFav(film.id))}
             buttonStyle={styles.removeButton}
           />
         ) : (
