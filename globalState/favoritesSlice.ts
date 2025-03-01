@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { Annonce as Annonce } from '../models/Film';
+import { Annonce as Annonce } from '../models/Annonce';
 
 interface FavoritesState {
   favorites: Annonce[];

@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useCallback } from 'react';
 import { View, StyleSheet, Text, ActivityIndicator } from 'react-native';
-import AnnonceList from '../components/FilmList';
-import { getAnnonces, Annonce } from '../models/Film';
+import AnnonceList from '../components/AnnonceList';
+import { getAnnonces, Annonce } from '../models/Annonce';
 import { useNavigation } from '@react-navigation/native';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { RootStackParamList } from '../App';

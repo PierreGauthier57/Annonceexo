@@ -5,8 +5,8 @@ import { RootState } from '../store';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { RootStackParamList } from '../App';
 import { useNavigation } from '@react-navigation/native';
-import { Annonce } from '../models/Film';
-import AnnonceList from '../components/FilmList';
+import { Annonce } from '../models/Annonce';
+import AnnonceList from '../components/AnnonceList';
 
 type FavoritesScreenNavigationProp = StackNavigationProp<RootStackParamList, 'Mes favoris'>;
 

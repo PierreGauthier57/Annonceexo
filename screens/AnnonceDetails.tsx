@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { addFav, removeFav } from '../globalState/favoritesSlice';
 import { RootState } from '../store';
 import type { NativeStackScreenProps } from '@react-navigation/native-stack';
-import { Annonce } from '../models/Film';
+import { Annonce } from '../models/Annonce';
 import * as Animatable from 'react-native-animatable';
 import Icon from 'react-native-vector-icons/FontAwesome';
 
