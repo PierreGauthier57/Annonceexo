@@ -92,7 +92,7 @@ const styles = StyleSheet.create({
     textAlign: 'center',
   },
   button: {
-    backgroundColor: 'lightgreen',
+    backgroundColor: 'pink',
     padding: 10,
     borderRadius: 5,
     alignItems: 'center',
