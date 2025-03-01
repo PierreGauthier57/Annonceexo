@@ -19,7 +19,7 @@ const favoritesSlice = createSlice({
       }
     },
     removeFav: (state, action: PayloadAction<number>) => {
-      state.favorites = state.favorites.filter((movie) => movie.id !== action.payload);
+      state.favorites = state.favorites.filter((movie) => movie.id !== action.payload.toString());
     },
   },
 });
