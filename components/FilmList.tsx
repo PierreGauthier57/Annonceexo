@@ -17,7 +17,7 @@ const Item = ({ film, onPressFilm }: ItemProps) => (
     <View style={styles.movieContainer}>
       <View style={styles.info}>
         <Text style={styles.title}>{film.model}</Text>
-        <Text>{film.releaseDate +" - "+ film.price + "€"}</Text>
+        <Text>{film.releaseDate + " - " + film.price + "€"}</Text>
         <Text>{film.description}</Text>
       </View>
     </View>
@@ -42,6 +42,9 @@ function MovieList({ films, onPressFilm }: MovieListProps) {
         value={search}
         onChangeText={handleSearch}
       />
+      <Text style={styles.announcementCount}>
+        {filteredFilms.length} annonces disponibles
+      </Text>
       <FlatList
         data={filteredFilms}
         keyExtractor={(item) => item.id.toString()}
@@ -65,6 +68,10 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderRadius: 5,
     paddingHorizontal: 10,
+    marginBottom: 10,
+  },
+  announcementCount: {
+    fontSize: 16,
     marginBottom: 10,
   },
   movieContainer: {
